@@ -1,9 +1,9 @@
 spring:
   application:
-    name: cit-it-skeleton-api
+    name: skeleton-api
   cloud:
     config:
-      uri: https://btsconfigservice.ciandt.com
+      uri: https://github.com/6et/cloud-config
       failFast: true
       username: config-service
       password: conf1g-s3rv1c3
