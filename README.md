@@ -1,4 +1,5 @@
 # Micro-Services
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1e53ae951024a1ab3b29815e084942a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=6et/skeleton-api&amp;utm_campaign=Badge_Grade [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/b8602f4af0c842a2a10e44fd9a0642c7)](https://www.codacy.com?utm_source=git@bitbucket.org&utm_medium=referral&utm_content=6et/skeleton-api&utm_campaign=Badge_Coverage)
 
 ### Pre-requisites
 
