@@ -29,7 +29,7 @@ public class TechnologyRestController {
     private final TechnologyAssembler assembler;
 
     @GetMapping
-    @ApiOperation(value = "Return a list with all technologies.")
+    @ApiOperation(value = "Return a page with all technologies.")
     public ResponseEntity<Page<TechnologyResource>> get(Pageable pageable) throws NoContentException {
         return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)) );
     }
