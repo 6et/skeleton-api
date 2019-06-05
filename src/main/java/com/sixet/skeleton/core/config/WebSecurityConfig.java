@@ -21,10 +21,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Value("${cit.api.authentication.username}")
+    @Value("${api.authentication.username}")
     private String username;
 
-    @Value("${cit.api.authentication.password}")
+    @Value("${api.authentication.password}")
     private String password;
 
     /**

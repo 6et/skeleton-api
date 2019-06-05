@@ -13,9 +13,6 @@ import java.util.List;
  * Generic class responsible for copying the matching resource from domain (D) to
  * resource (R) classes. The only require is to the both classes have the same
  * param names
- *
- * @author mvidolin
- *
  * @param <D>
  * @param <R>
  */
