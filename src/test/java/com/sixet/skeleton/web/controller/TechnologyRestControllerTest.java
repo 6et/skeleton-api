@@ -1,26 +1,22 @@
 package com.sixet.skeleton.web.controller;
 
-import com.sixet.core.business.TechnologyBusiness;
-import com.sixet.core.domain.Technology;
-import com.sixet.exception.NoContentException;
-import com.sixet.utils.TechnologyUtilsTest;
-import com.sixet.web.resource.TechnologyResource;
+import com.sixet.skeleton.core.business.TechnologyBusiness;
+import com.sixet.skeleton.core.domain.Technology;
+import com.sixet.skeleton.core.exception.NoContentException;
+import com.sixet.skeleton.utils.TechnologyUtilsTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
@@ -59,10 +55,9 @@ public class TechnologyRestControllerTest extends BaseRestControllerTest {
     @WithMockUser
     public void getTechnologies_withContent_mustReturn200() throws Exception {
 
-        Arrays.asList(TechnologyUtilsTest.createTechnology(), TechnologyUtilsTest.createTechnology());
-        List l = new ArrayList<Technology>();
+        Page<Technology> page = new PageImpl<>(Collections.emptyList(), Pageable.unpaged(), 1);
 
-        given(technologyBusiness.findAll(isA(Pageable.class))).willReturn(PageRequest.of(0,10));
+        given(technologyBusiness.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));

@@ -1,6 +1,6 @@
 package com.sixet.skeleton.utils;
 
-import com.sixet.core.domain.Technology;
+import com.sixet.skeleton.core.domain.Technology;
 
 public class TechnologyUtilsTest {
 
