@@ -1,0 +1,11 @@
+${AnsiColor.BRIGHT_GREEN}
+
+                              ____                  ____                       ______
+            ..'''' |    ..'' |            |        |            `````|`````  .~      ~.  |..          |
+         .''       |..''     |______      |        |______           |      |          | |  ``..      |
+      ..'          |``..     |            |        |                 |      |          | |      ``..  |
+....''             |    ``.. |___________ |_______ |___________      |       `.______.'  |          ``|
+
+
+${AnsiColor.BRIGHT_GREEN}  :: Skeleton - Micro Services by SixET (Running in Spring Boot ${spring-boot.version}) ::
+${AnsiStyle.NORMAL}

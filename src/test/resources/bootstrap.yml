@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: cit-it-skeleton-api
+  cloud:
+    config:
+      uri: https://btsconfigservice.ciandt.com
+      failFast: true
+      username: config-service
+      password: conf1g-s3rv1c3

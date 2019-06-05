@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: cit-it-skeleton-api
+  cloud:
+    config:
+      # uri: a URL eh inserida via parametro no comando de Run
+      failFast: true
+      username: config-service
+      password: conf1g-s3rv1c3
