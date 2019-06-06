@@ -5,7 +5,7 @@
 
 + Java >= 1.8
 + Gradle >= 2
-+ __[Lombok](https://projectlombok.org/download.html)
++ [Lombok](https://projectlombok.org/download.html)
 
 ## Profiles
 
