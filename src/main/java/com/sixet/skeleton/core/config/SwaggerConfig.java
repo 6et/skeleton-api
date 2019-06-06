@@ -22,13 +22,15 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .consumes(Collections.singleton(APPLICATION_JSON))
+                .produces(Collections.singleton(APPLICATION_JSON))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(CONTROLLERS_PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(new ApiInfo(
-                        "Technology REST API",
-                        "End points to maintain technology API.",
+                        "Skeleton Micro-Services",
+                        "End points to maintain Micro-Services.",
                         "1.0.0",
                         "",
                         new Contact("Get Trevisan", "https://github.com/6et", "gtrevisane@gmail.com"),
