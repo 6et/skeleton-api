@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,9 +31,9 @@ public class TechnologyBusinessTest extends BaseBusinessTest {
 
     @Test(expected = NoContentException.class)
     public void findAll_withEmptyResult_mustThrowNoContentException() throws NoContentException {
-        Page<Technology> page = new PageImpl<>(Collections.emptyList(), Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willThrow(NoContentException.class);
-        business.findAll(isA(Pageable.class));
+        Pageable pageable = new PageRequest();
+        business.findAll(pageable);
     }
 
     @Test

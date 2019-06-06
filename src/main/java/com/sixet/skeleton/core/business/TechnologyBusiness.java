@@ -19,7 +19,11 @@ public class TechnologyBusiness {
     private final TechnologyService service;
 
     public Page<Technology> findAll(Pageable pageable) throws NoContentException {
-        return service.findAll(pageable);
+        Page<Technology> technologies = service.findAll(pageable);
+        if (technologies.getContent().isEmpty()) {
+            throw new NoContentException();
+        }
+        return technologies;
     }
 
     public Technology create(Technology technology) {

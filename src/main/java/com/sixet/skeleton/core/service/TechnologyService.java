@@ -1,6 +1,7 @@
 package com.sixet.skeleton.core.service;
 
 import com.sixet.skeleton.core.domain.Technology;
+import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.repository.TechnologyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
