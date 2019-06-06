@@ -9,8 +9,8 @@
 ## Profiles
 
 To run the application in a specific profile you must set the argument:
-  ```java
+```java
   -Dspring.profiles.active=dev
-  ```
+```
 
 ## Packages
