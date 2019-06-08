@@ -6,7 +6,7 @@ plugins {
 dependencies {
 //	classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 //	// https://mvnrepository.com/artifact/org.owasp/dependency-check-gradle
-//	classpath "org.owasp:dependency-check-gradle:3.3.2"
+	classpath "org.owasp:dependency-check-gradle:5.0.0-M3.1"
 //	classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
 }
 
@@ -69,7 +69,6 @@ dependencies {
 	// swagger
 	compile('io.springfox:springfox-swagger2:2.9.2')
 	compile('io.springfox:springfox-swagger-ui:2.9.2')
-	compile group: 'org.owasp', name: 'dependency-check-gradle', version: '5.0.0-M3.1'
 }
 
 dependencyManagement {
