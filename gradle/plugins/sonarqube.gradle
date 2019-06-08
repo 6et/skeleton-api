@@ -1,8 +1,8 @@
 sonarqube {
     properties {
         property "sonar.host.url", "http://potter.cit:9000"
-        property "sonar.projectName", "CI&T PD API"
-        property "sonar.projectKey", "cit-it-pd-api"
+        property "sonar.projectName", "Skeleton API"
+        property "sonar.projectKey", "skeleton-api"
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.language", "java"
         property "sonar.java.source", "1.8"
