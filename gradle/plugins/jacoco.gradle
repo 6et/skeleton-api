@@ -1,9 +1,7 @@
 jacocoTestReport {
-    group = "Reporting"
     reports {
-        xml.enabled true
+        xml.enabled false
         csv.enabled false
-        html.enabled false
-        xml.destination "${buildDir}/reports/coverage/coverage.xml"
+        html.destination file("${buildDir}/reports/coverage/coverage")
     }
 }
