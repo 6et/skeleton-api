@@ -11,9 +11,9 @@ plugins {
 ////	classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
 //}
 
-dependencies {
-	classpath "org.owasp:dependency-check-gradle:5.0.0-M3.1"
-}
+//dependencies {
+//	classpath "org.owasp:dependency-check-gradle:5.0.0-M3.1"
+//}
 
 apply plugin: 'java'
 apply plugin: 'idea'
