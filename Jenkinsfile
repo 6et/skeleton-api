@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew clean build -x test -x checkstyleMain -x checkstyleTest -x findbugsMain -x compileQuerydslJava -x checkstyleQuerydsl'
+                sh './gradlew clean build'
                 sh 'cp build/libs/6et-skeleton-api.jar docker/'
             }
         }
