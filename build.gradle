@@ -6,6 +6,12 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
 
+apply from: 'gradle/plugins/dependency-check.gradle'
+//apply from: "gradle/plugins/sonarqube.gradle"
+apply from: 'gradle/plugins/checkstyle.gradle'
+apply from: 'gradle/plugins/findbugs.gradle'
+apply from: 'gradle/plugins/jacoco.gradle'
+
 group = 'com.sixet'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -53,4 +59,21 @@ dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+
+springBoot {
+	buildInfo()
+}
+
+bootJar {
+	baseName "skeleton"
+	launchScript()
+}
+
+task zipDBScripts(type: Zip) {
+	from 'database/changelog'
+	include '*'
+	include '*/*'
+	archiveName 'database.zip'
+	destinationDir(file('./'))
 }

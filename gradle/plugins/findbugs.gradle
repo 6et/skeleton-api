@@ -1,0 +1,21 @@
+findbugs {
+    ignoreFailures = false
+    toolVersion = "3.0.1"
+    sourceSets=[sourceSets.main]
+    // excludeFilter = file("config/findbugs/excludeFilter.xml")
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
+}
+
+task findbugsSecurity(type: FindBugs, dependsOn: classes) {
+    source = project.sourceSets.main.java.srcDirs
+    classpath = files()
+    //pluginClasspath = files(configurations.foo.asPath)
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
