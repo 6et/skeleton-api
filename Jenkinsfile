@@ -1,6 +1,8 @@
 #!groovy
 pipeline {
 
+agent any
+
 options {
     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '10', numToKeepStr: '20'))
     timestamps()
