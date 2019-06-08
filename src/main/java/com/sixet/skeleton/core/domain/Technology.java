@@ -33,10 +33,4 @@ public class Technology implements AbstractEntity {
 
     @Column
     private boolean active;
-
-    public void updateFields(Technology technology){
-        this.id = technology.id;
-        this.name = technology.name;
-        this.active = technology.active;
-    }
 }
