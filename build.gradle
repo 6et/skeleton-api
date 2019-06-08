@@ -1,13 +1,18 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id "org.owasp.dependencycheck" version "5.0.0-M3.1"
 	id 'java'
 }
 
+//dependencies {
+////	classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+////	// https://mvnrepository.com/artifact/org.owasp/dependency-check-gradle
+////	classpath "org.owasp:dependency-check-gradle:5.0.0-M3.1"
+////	classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+//}
+
 dependencies {
-//	classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-//	// https://mvnrepository.com/artifact/org.owasp/dependency-check-gradle
 	classpath "org.owasp:dependency-check-gradle:5.0.0-M3.1"
-//	classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
 }
 
 apply plugin: 'java'
