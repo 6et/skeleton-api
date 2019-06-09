@@ -7,5 +7,5 @@ ${AnsiColor.BRIGHT_GREEN}
 ....''             |    ``.. |___________ |_______ |___________      |       `.______.'  |          ``|
 
 
-${AnsiColor.BRIGHT_GREEN}  :: Skeleton - Micro Services by SixET (Running in Spring Boot ${spring-boot.version}) ::
+${AnsiColor.BRIGHT_WHITE} :: Skeleton - Micro Services by 6et Trevisan (Running in Spring Boot ${AnsiColor.BRIGHT_GREEN}${spring-boot.version}${AnsiColor.BRIGHT_WHITE}) ::
 ${AnsiStyle.NORMAL}
