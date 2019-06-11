@@ -20,6 +20,4 @@ public class SkeletonApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
 }

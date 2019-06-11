@@ -12,6 +12,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+/**
+ * SwaggerConfig class provides the configuration of swagger.
+ * @since 11/06/2019
+ * @author <a href="mailto:gtrevisan@ciandt.com">Get Trevisan</a>
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {

@@ -10,6 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * TechnologyService interface provides the access functionalities to the database to Technology entity.
+ * @since 11/06/2019
+ * @author <a href="mailto:gtrevisan@ciandt.com">Get Trevisan</a>
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

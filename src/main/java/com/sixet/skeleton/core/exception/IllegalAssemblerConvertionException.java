@@ -1,7 +1,8 @@
 package com.sixet.skeleton.core.exception;
 
 /**
- * The class {@code IllegalAssemblerConvertionException} is used to indicates a {@link TechnicalException} in a convertion.
+ * The class {@code IllegalAssemblerConvertionException} is used to indicates a
+ * {@link TechnicalException} in a convertion.
  */
 public class IllegalAssemblerConvertionException extends TechnicalException {
 

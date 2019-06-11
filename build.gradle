@@ -3,6 +3,7 @@ plugins {
 	id "org.owasp.dependencycheck" version "5.0.0-M3.1"
 	id 'java'
 	id 'jacoco'
+	id 'checkstyle'
 }
 
 apply plugin: 'idea'
@@ -10,7 +11,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.owasp.dependencycheck'
 //apply plugin: "org.sonarqube"
-apply plugin: 'checkstyle'
+//apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 //apply plugin: 'jacoco'
 

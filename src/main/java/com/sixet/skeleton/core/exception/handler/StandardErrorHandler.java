@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * Class to determine the Standard Error Handler.
+ */
 @Data
 @AllArgsConstructor
 public class StandardErrorHandler implements Serializable {

@@ -32,7 +32,7 @@ public class BusinessException extends Exception {
      *         unknown.)
      * @since  1.4
      */
-    public BusinessException(String message, Throwable cause){
+    public BusinessException(String message, Throwable cause) {
         super(message, cause);
     }
 

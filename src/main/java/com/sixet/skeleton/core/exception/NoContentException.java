@@ -1,7 +1,7 @@
 package com.sixet.skeleton.core.exception;
 
 /**
- * The class {@code NoContentException} is used to indicate that no content was found for request
+ * The class {@code NoContentException} is used to indicate that no content was found for request.
  */
 public class NoContentException extends Exception {
 
@@ -11,6 +11,7 @@ public class NoContentException extends Exception {
      * call to {@link #initCause}.
      */
     public NoContentException() {
+
     }
 
     /**

@@ -23,7 +23,8 @@ public class GlobalExceptionHandler {
     private MessageResourceUtil messageResource;
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<StandardErrorHandler> processNotFoundException(NotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<StandardErrorHandler> processNotFoundException(NotFoundException e,
+                                                                         HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 this.createStandardErrorHandler(System.currentTimeMillis(),
                         HttpStatus.NOT_FOUND.value(),
@@ -34,7 +35,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<StandardErrorHandler> processBusinessException(NotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<StandardErrorHandler> processBusinessException(NotFoundException e,
+                                                                         HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
                 this.createStandardErrorHandler(System.currentTimeMillis(),
                         HttpStatus.CONFLICT.value(),
@@ -49,7 +51,8 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(), ex);
     }
 
-    private StandardErrorHandler createStandardErrorHandler(Long date, Integer statusCode, String errorMessage, String message, String path){
+    private StandardErrorHandler createStandardErrorHandler(Long date, Integer statusCode,
+                                                            String errorMessage, String message, String path){
         return new StandardErrorHandler(date, statusCode, errorMessage, message, path);
     }
 
