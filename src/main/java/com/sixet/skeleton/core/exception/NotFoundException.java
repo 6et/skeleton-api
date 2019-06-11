@@ -10,7 +10,9 @@ public class NotFoundException extends RuntimeException {
      * @param   message   the detail message. The detail message is saved for
      *          later retrieval by the {@link #getMessage()} method.
      */
-    public NotFoundException(String message) { super(message); }
+    public NotFoundException(String message) {
+        super(message);
+    }
 
     /**
      * Constructs a new exception with the specified detail message and
@@ -26,7 +28,7 @@ public class NotFoundException extends RuntimeException {
      *         unknown.)
      * @since  1.4
      */
-    public NotFoundException(String message, Throwable cause){
+    public NotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

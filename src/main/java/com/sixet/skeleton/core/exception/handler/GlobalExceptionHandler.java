@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
     }
 
     private StandardErrorHandler createStandardErrorHandler(Long date, Integer statusCode,
-                                                            String errorMessage, String message, String path){
+                                                            String errorMessage, String message, String path) {
         return new StandardErrorHandler(date, statusCode, errorMessage, message, path);
     }
 

@@ -38,7 +38,7 @@ public class TechnologyRestController {
     @GetMapping
     @ApiOperation(value = "Return a page with all technologies.")
     public ResponseEntity<Page<TechnologyResource>> get(Pageable pageable) throws NoContentException {
-        return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)) );
+        return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)));
     }
 
     @PostMapping
