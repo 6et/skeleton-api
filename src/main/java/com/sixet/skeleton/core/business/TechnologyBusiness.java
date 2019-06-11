@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * TechnologyBusiness class provides the business rules.
  * @since 11/06/2019
- * @author <a href="mailto:gtrevisan@ciandt.com">Get Trevisan</a>
+ * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
  */
 @Slf4j
 @Component

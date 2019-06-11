@@ -15,7 +15,7 @@ import java.util.Collections;
 /**
  * SwaggerConfig class provides the configuration of swagger.
  * @since 11/06/2019
- * @author <a href="mailto:gtrevisan@ciandt.com">Get Trevisan</a>
+ * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
  */
 @Configuration
 @EnableSwagger2
