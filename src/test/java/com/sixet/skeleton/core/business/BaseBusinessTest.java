@@ -5,4 +5,4 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-class BaseBusinessTest {}
+class BaseBusinessTest { }

@@ -1,5 +1,8 @@
 package com.sixet.skeleton.core.exception.response;
 
+/**
+ *
+ */
 public class ValidationErrorFieldResponseData {
 
     private String field;

@@ -3,7 +3,7 @@ spring:
     name: skeleton-api
   cloud:
     config:
-      uri: http://localhost:9999
+      uri: http://config-service:9999
       failFast: true
       username: config-service
       password: conf1g-s3rv1c3

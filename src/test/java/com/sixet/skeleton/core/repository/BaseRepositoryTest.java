@@ -4,7 +4,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+/**
+ *
+ */
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
-public class BaseRepositoryTest {}
+public class BaseRepositoryTest { }

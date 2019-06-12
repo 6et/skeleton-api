@@ -1,14 +1,14 @@
 sonarqube {
     properties {
-        property "sonar.host.url", "http://potter.cit:9000"
-        property "sonar.projectName", "Skeleton API"
+        property "sonar.host.url", "http://sonar:9000"
+        property "sonar.projectName", "Skeleton-API"
         property "sonar.projectKey", "skeleton-api"
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.language", "java"
-        property "sonar.java.source", "1.8"
-        property "sonar.java.libraries", "lib/*.jar"
+        property "sonar.java.source", "11"
+        property "sonar.java.libraries", "build/libs/*.jar"
         property "sonar.java.binaries", "build/classes"
-        property "sonar.login", "6710e0eba78700b5234be4603f6bbde3ddbaf5ba"
+        property "sonar.login", "8165a19603e246e85da9127552c9c4b5b4fa46e9"
         property "sonar.scm.disabled", "true"
     }
 }

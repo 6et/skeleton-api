@@ -2,6 +2,9 @@ package com.sixet.skeleton.core.exception;
 
 import com.sixet.skeleton.core.exception.response.ValidationErrorResponse;
 
+/**
+ *
+ */
 public class ValidationException extends RuntimeException {
 
     private static final long serialVersionUID = -107061383836933531L;

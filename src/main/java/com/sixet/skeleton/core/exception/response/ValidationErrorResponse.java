@@ -3,6 +3,9 @@ package com.sixet.skeleton.core.exception.response;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class ValidationErrorResponse {
     private List<ValidationErrorFieldResponseData> fieldErrors = new ArrayList<>();
     private String errorMessageCode;

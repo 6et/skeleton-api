@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * TechnologyRestController class provides the access to the endpoints of the application.
+ * @since 11/06/2019
+ * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
+ */
 @Slf4j
 @RestController
 @Api(value = "Technology", tags = "Technology")

@@ -1,5 +1,10 @@
 package com.sixet.skeleton.core.exception;
 
+/**
+ * NotFoundException class provides the NotFound Exception.
+ * @since 11/06/2019
+ * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
+ */
 public class NotFoundException extends RuntimeException {
 
     /**

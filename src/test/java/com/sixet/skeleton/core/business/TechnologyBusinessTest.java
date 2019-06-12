@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
+/**
+ *
+ */
 @RunWith(SpringRunner.class)
 public class TechnologyBusinessTest extends BaseBusinessTest {
 

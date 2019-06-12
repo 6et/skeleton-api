@@ -4,21 +4,19 @@ plugins {
 	id 'java'
 	id 'jacoco'
 	id 'checkstyle'
+	id 'findbugs'
+	id "org.sonarqube" version "2.7.1"
 }
 
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'org.owasp.dependencycheck'
-//apply plugin: "org.sonarqube"
-//apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-//apply plugin: 'jacoco'
+
 
 
 
 apply from: 'gradle/plugins/dependency-check.gradle'
-//apply from: "gradle/plugins/sonarqube.gradle"
+apply from: "gradle/plugins/sonarqube.gradle"
 apply from: 'gradle/plugins/checkstyle.gradle'
 apply from: 'gradle/plugins/findbugs.gradle'
 apply from: 'gradle/plugins/jacoco.gradle'
