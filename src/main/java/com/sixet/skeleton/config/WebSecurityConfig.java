@@ -1,4 +1,4 @@
-package com.sixet.skeleton.core.config;
+package com.sixet.skeleton.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

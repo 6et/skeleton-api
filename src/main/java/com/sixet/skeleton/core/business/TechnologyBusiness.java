@@ -36,31 +36,20 @@ public class TechnologyBusiness {
     }
 
     public Technology update(Long id, Technology technology)  {
-        Technology tech = this.verifyIfTechnologyExists(id);
+        Technology tech = service.findById(id);
         technology.setId(tech.getId());
         tech.setName(technology.getName());
         tech.setActive(technology.isActive());
         return service.save(tech);
     }
 
-    public void delete(Long id) {
-        service.delete(this.verifyIfTechnologyExists(id));
+    public Technology delete(Long id) {
+        Technology tech = service.findById(id);
+        service.delete(tech);
+        return tech;
     }
 
     public Technology findByName(String name) throws NoContentException {
         return service.findByName(name);
-    }
-
-    /**
-     * Verify if the technology exists.
-     * @param id
-     * @return
-     */
-    private Technology verifyIfTechnologyExists(Long id) {
-        Technology tech = service.findById(id);
-        if (tech == null) {
-            throw new NotFoundException(String.format("Technology %d not found.", id));
-        }
-        return tech;
     }
 }

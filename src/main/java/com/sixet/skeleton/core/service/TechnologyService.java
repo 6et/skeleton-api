@@ -1,6 +1,7 @@
 package com.sixet.skeleton.core.service;
 
 import com.sixet.skeleton.core.domain.Technology;
+import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.core.repository.TechnologyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class TechnologyService {
 
     @Transactional(readOnly = true)
     public Technology findById(Long id) {
-        return repository.getOne(id);
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Technology %d not found.", id)));
     }
 
     @Transactional

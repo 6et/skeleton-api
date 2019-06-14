@@ -1,9 +1,8 @@
-package com.sixet.skeleton.core.config;
+package com.sixet.skeleton.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -27,10 +26,9 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .consumes(Collections.singleton(APPLICATION_JSON))
-                .produces(Collections.singleton(APPLICATION_JSON))
+//                .consumes(Collections.singleton(APPLICATION_JSON))
+//                .produces(Collections.singleton(APPLICATION_JSON))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(CONTROLLERS_PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(new ApiInfo(

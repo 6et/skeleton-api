@@ -41,28 +41,27 @@ public class TechnologyRestController {
     private final TechnologyAssembler assembler;
 
     @GetMapping
-    @ApiOperation(value = "Return a page with all technologies.")
+    @ApiOperation(value = "Return a page with all technologies.", response = Page.class)
     public ResponseEntity<Page<TechnologyResource>> get(Pageable pageable) throws NoContentException {
         return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)));
     }
 
     @PostMapping
     @ApiOperation(value = "Create a technology.")
-    public ResponseEntity<Technology> create(@RequestBody TechnologyResource resource) {
-        return ResponseEntity.ok(business.create(assembler.fromResource(resource)));
+    public ResponseEntity<TechnologyResource> create(@RequestBody TechnologyResource resource) {
+        return ResponseEntity.ok(assembler.fromDomain(business.create(assembler.fromResource(resource))));
     }
 
     @PutMapping(value = "/{id}")
-    @ApiOperation(value = "Update a technology.", response = Technology.class)
-    public ResponseEntity<Technology> update(@PathVariable Long id, @RequestBody TechnologyResource resource) {
-        return ResponseEntity.ok(business.update(id, assembler.fromResource(resource)));
+    @ApiOperation(value = "Update a technology.", response = TechnologyResource.class)
+    public ResponseEntity<TechnologyResource> update(@PathVariable Long id, @RequestBody TechnologyResource resource) {
+        return ResponseEntity.ok(assembler.fromDomain(business.update(id, assembler.fromResource(resource))));
     }
 
     @DeleteMapping(value = "/{id}")
-    @ApiOperation(value = "Delete a technology.", response = Technology.class)
-    public ResponseEntity<Technology> delete(@PathVariable Long id) throws NotFoundException {
-        business.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @ApiOperation(value = "Delete a technology.", response = TechnologyResource.class)
+    public ResponseEntity<TechnologyResource> delete(@PathVariable Long id) {
+        return ResponseEntity.ok(assembler.fromDomain(business.delete(id)));
     }
 
 //    @ApiOperation(value = "Get technology by name")
