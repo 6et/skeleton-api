@@ -1,8 +1,10 @@
 package com.sixet.skeleton.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -20,23 +22,52 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String APPLICATION_JSON = "application/json";
-    private static final String CONTROLLERS_PACKAGE = "com.sixet.core.business.controller";
+    @Value("${swagger.api.title}")
+    private String title;
+
+    @Value("${swagger.api.description}")
+    private String description;
+
+    @Value("${swagger.api.version}")
+    private String version;
+
+    @Value("${swagger.api.termsOfServiceUrl}")
+    private String termsOfServiceUrl;
+
+    @Value("${swagger.content.type}")
+    private String contentType;
+
+    @Value("${swagger.controller.basepackage}")
+    private String basePackage;
+
+    @Value("${swagger.contact.name}")
+    private String name;
+
+    @Value("${swagger.contact.url}")
+    private String url;
+
+    @Value("${swagger.contact.email}")
+    private String email;
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-//                .consumes(Collections.singleton(APPLICATION_JSON))
-//                .produces(Collections.singleton(APPLICATION_JSON))
+                .consumes(Collections.singleton(contentType))
+                .produces(Collections.singleton(contentType))
                 .select()
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(basePackage))
+                .paths(PathSelectors.ant("/technologies/**"))
                 .build()
-                .apiInfo(new ApiInfo(
-                        "Skeleton Micro-Services",
-                        "End points to maintain Micro-Services.",
-                        "1.0.0",
-                        "",
-                        new Contact("Get Trevisan", "https://github.com/6et", "gtrevisane@gmail.com"),
-                        "", "", Collections.emptyList()));
+                .apiInfo(apiInfo());
+    }
+
+    private ApiInfo apiInfo() {
+      return new ApiInfo(
+                title,
+                description,
+                version,
+                termsOfServiceUrl,
+                new Contact(name, url, email),
+                "", "", Collections.emptyList());
     }
 }

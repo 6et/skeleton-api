@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * TechnologyService interface provides the access functionalities to the database to Technology entity.
+ * TechnologyService interface provides the functionality to access the database.
  * @since 11/06/2019
  * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
  */
@@ -30,7 +30,8 @@ public class TechnologyService {
 
     @Transactional(readOnly = true)
     public Technology findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Technology %d not found.", id)));
+        return repository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Technology %d not found.", id)));
     }
 
     @Transactional
