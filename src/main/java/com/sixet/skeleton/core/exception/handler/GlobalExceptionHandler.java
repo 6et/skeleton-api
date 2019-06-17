@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 /**
  *
  */
@@ -28,11 +31,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<StandardErrorHandler> processNotFoundException(NotFoundException e,
                                                                          HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                this.createStandardErrorHandler(System.currentTimeMillis(),
-                        HttpStatus.NOT_FOUND.value(),
-                        e.getMessage(),
-                        "Not found.",
+        return ResponseEntity.status(NOT_FOUND).body(
+                this.createStandardErrorHandler(System.currentTimeMillis(), NOT_FOUND.value(), e.getMessage(),
                         request.getRequestURI())
         );
     }
@@ -40,11 +40,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<StandardErrorHandler> processBusinessException(NotFoundException e,
                                                                          HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                this.createStandardErrorHandler(System.currentTimeMillis(),
-                        HttpStatus.CONFLICT.value(),
-                        e.getMessage(),
-                        "BUSINESSSSSS",
+        return ResponseEntity.status(CONFLICT).body(
+                this.createStandardErrorHandler(System.currentTimeMillis(), CONFLICT.value(), e.getMessage(),
                         request.getRequestURI()));
     }
 
@@ -54,9 +51,9 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(), ex);
     }
 
-    private StandardErrorHandler createStandardErrorHandler(Long date, Integer statusCode,
-                                                            String errorMessage, String message, String path) {
-        return new StandardErrorHandler(date, statusCode, errorMessage, message, path);
+    private StandardErrorHandler createStandardErrorHandler(Long date, Integer statusCode, String errorMessage,
+                                                            String path) {
+        return new StandardErrorHandler(date, statusCode, errorMessage, path);
     }
 
 
