@@ -49,11 +49,11 @@ public class TechnologyRestController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach was not found")})
     @ApiOperation(value = "Return an object Page with all technologies.", response = Page.class)
-    public ResponseEntity<Page<TechnologyResource>> get(Pageable pageable) throws NoContentException {
+    public ResponseEntity<Page<TechnologyResource>> findAll(Pageable pageable) throws NoContentException {
         return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)));
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = TechnologyResource.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
