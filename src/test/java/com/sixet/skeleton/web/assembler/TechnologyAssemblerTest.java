@@ -16,6 +16,11 @@ public class TechnologyAssemblerTest extends BaseAssemblerTest {
     @Autowired
     private TechnologyAssembler assembler;
 
+    /**
+     * METHOD: fromDomain
+     * RULE: This method convert the domain to resource.
+     * CASE: If converted must be return
+     */
     @Test
     public void convertDomainToResource_mustReturnResource() {
         Technology domain = TechnologyUtilsTest.createTechnology();
@@ -23,6 +28,11 @@ public class TechnologyAssemblerTest extends BaseAssemblerTest {
         assertEquals(assembler.fromDomain(domain), resource);
     }
 
+    /**
+     * METHOD: fromDomain
+     * RULE: This method convert the resource to domain.
+     * CASE: If converted must be return
+     */
     @Test
     public void convertResourceToDomain_mustReturnDomain() {
         Technology domain = TechnologyUtilsTest.createTechnology();
