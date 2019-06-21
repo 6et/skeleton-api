@@ -12,6 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class StandardErrorHandler implements Serializable {
     private static final long serialVersionUID = 1L;
+    private String exception;
     private Long timestamp;
     private Integer status;
     private String errorMessage;
