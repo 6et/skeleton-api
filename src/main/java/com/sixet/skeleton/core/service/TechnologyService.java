@@ -43,9 +43,4 @@ public class TechnologyService {
     public void delete(Technology technology) {
         repository.delete(technology);
     }
-
-    @Transactional(readOnly = true)
-    public Technology findByName(String name) {
-        return repository.findByName(name);
-    }
 }

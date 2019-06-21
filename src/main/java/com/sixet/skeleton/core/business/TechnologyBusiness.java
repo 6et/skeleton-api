@@ -47,8 +47,4 @@ public class TechnologyBusiness {
         service.delete(tech);
         return tech;
     }
-
-    public Technology findByName(String name) throws NoContentException {
-        return service.findByName(name);
-    }
 }
