@@ -9,6 +9,6 @@ RUN apk del tzdata
 ENV SPRING_PROFILE=notset
 ENV CONFIG_SERVICE=https://btsconfigservice.ciandt.com
 
-ADD ./skeleton.jar /opt/api.jar
+COPY ./skeleton.jar /opt/api.jar
 
 ENTRYPOINT exec java -jar -Dspring.profiles.active="${SPRING_PROFILE}" -Dspring.cloud.config.uri="${CONFIG_SERVICE}" /opt/api.jar

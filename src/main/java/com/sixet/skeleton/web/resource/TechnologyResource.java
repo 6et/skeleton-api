@@ -1,7 +1,11 @@
 package com.sixet.skeleton.web.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * {@link com.sixet.skeleton.core.domain.Technology} resource representation.
@@ -9,6 +13,8 @@ import lombok.Data;
  * @since Jun 11, 2019
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TechnologyResource {
 

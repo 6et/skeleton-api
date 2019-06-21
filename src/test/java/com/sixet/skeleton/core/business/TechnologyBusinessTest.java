@@ -38,11 +38,4 @@ public class TechnologyBusinessTest extends BaseBusinessTest {
         given(service.findAll(pageable)).willReturn(page);
         business.findAll(pageable);
     }
-
-    @Test
-    public void findByName_withResults_mustReturnTechnology() throws NoContentException {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        given(service.findByName(technology.getName())).willReturn(technology);
-        assertEquals(technology, business.findByName(technology.getName()));
-    }
 }

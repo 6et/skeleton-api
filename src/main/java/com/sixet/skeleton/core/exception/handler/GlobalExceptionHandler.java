@@ -46,19 +46,19 @@ public class GlobalExceptionHandler {
 
         if (ex instanceof NotFoundException) {
             return ResponseEntity.status(NOT_FOUND).body(
-                    this.createStandardErrorHandler(ex.getClass().getName(), System.currentTimeMillis(),
+                    this.createStandardErrorHandler(ex.getClass().getSimpleName(), System.currentTimeMillis(),
                             NOT_FOUND.value(), ex.getMessage(),
                             request.getRequestURI())
             );
         } else if (ex instanceof BusinessException) {
             return ResponseEntity.status(CONFLICT).body(
-                    this.createStandardErrorHandler(ex.getClass().getName(), System.currentTimeMillis(),
+                    this.createStandardErrorHandler(ex.getClass().getSimpleName(), System.currentTimeMillis(),
                             CONFLICT.value(), ex.getMessage(),
                             request.getRequestURI())
             );
         } else if (ex instanceof NoContentException) {
             return ResponseEntity.status(NO_CONTENT).body(
-                    this.createStandardErrorHandler(ex.getClass().getName(), System.currentTimeMillis(),
+                    this.createStandardErrorHandler(ex.getClass().getSimpleName(), System.currentTimeMillis(),
                             NO_CONTENT.value(), ex.getMessage(),
                             request.getRequestURI())
             );
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
                 log.warn(ex.getMessage());
             }
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
-                    this.createStandardErrorHandler(ex.getClass().getName(), System.currentTimeMillis(),
+                    this.createStandardErrorHandler(ex.getClass().getSimpleName(), System.currentTimeMillis(),
                             INTERNAL_SERVER_ERROR.value(), ex.getMessage(),
                             request.getRequestURI())
             );

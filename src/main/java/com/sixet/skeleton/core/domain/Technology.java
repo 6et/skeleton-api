@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,4 +39,8 @@ public class Technology implements AbstractEntity {
 
     @Column
     private boolean active;
+
+    public boolean hasName() {
+        return !StringUtils.isEmpty(name);
+    }
 }

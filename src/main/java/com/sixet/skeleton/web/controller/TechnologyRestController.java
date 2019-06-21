@@ -1,6 +1,7 @@
 package com.sixet.skeleton.web.controller;
 
 import com.sixet.skeleton.core.business.TechnologyBusiness;
+import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.exception.handler.StandardErrorHandler;
 import com.sixet.skeleton.web.assembler.TechnologyAssembler;
@@ -52,18 +53,18 @@ public class TechnologyRestController {
         return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)));
     }
 
-    @PostMapping
+    @PostMapping()
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = TechnologyResource.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach was not found")})
     @ApiOperation(value = "Create a technology.")
-    public ResponseEntity<TechnologyResource> create(@RequestBody TechnologyResource resource) {
+    public ResponseEntity<TechnologyResource> create(@RequestBody TechnologyResource resource) throws BusinessException {
         return ResponseEntity.ok(assembler.fromDomain(business.create(assembler.fromResource(resource))));
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/update/{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = TechnologyResource.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -74,7 +75,7 @@ public class TechnologyRestController {
         return ResponseEntity.ok(assembler.fromDomain(business.update(id, assembler.fromResource(resource))));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = TechnologyResource.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

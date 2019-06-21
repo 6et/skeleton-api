@@ -1,8 +1,11 @@
 package com.sixet.skeleton.core.business;
 
+import com.sixet.skeleton.core.constants.ResponseMessages;
 import com.sixet.skeleton.core.domain.Technology;
+import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.service.TechnologyService;
+import com.sixet.skeleton.utils.MessageResourceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,10 @@ public class TechnologyBusiness {
         return technologies;
     }
 
-    public Technology create(Technology technology) {
+    public Technology create(Technology technology) throws BusinessException {
+        if(!technology.hasName()) {
+            throw new BusinessException(ResponseMessages.MESSAGE_ERROR_NAME_REQUIRED);
+        }
         return service.save(technology);
     }
 
