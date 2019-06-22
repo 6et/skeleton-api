@@ -1,17 +1,22 @@
 package com.sixet.skeleton.core.business;
 
 import com.sixet.skeleton.core.domain.Technology;
+import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NoContentException;
+import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.core.service.TechnologyService;
 import com.sixet.skeleton.utils.TechnologyUtilsTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -23,8 +28,10 @@ import static org.mockito.BDDMockito.given;
 /**
  *
  */
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-public class TechnologyBusinessTest extends BaseBusinessTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class TechnologyBusinessTest {
 
     @MockBean
     private TechnologyService service;
@@ -56,6 +63,55 @@ public class TechnologyBusinessTest extends BaseBusinessTest {
         Page<Technology> page = new PageImpl<>(Arrays.asList(tech,tech1), Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
         business.findAll(PageRequest.of(1,2));
+    }
+
+    /**
+     * METHOD: create
+     * RULE: This method create a technology.
+     * CASE: With valid content must be create a technology and return 200 - OK.
+     */
+    @Test
+    public void create_withValidContent_mustReturn() throws BusinessException {
+        Technology tech = TechnologyUtilsTest.createTechnology();
+        given(service.save(tech)).willReturn(tech);
+        business.create(tech);
+    }
+
+    /**
+     * METHOD: create
+     * RULE: This method create a technology.
+     * CASE: With invalid content must be return a 409 - Business Exception.
+     */
+    @Test(expected = BusinessException.class)
+    public void create_withInvalidContent_mustReturnBusinessException() throws BusinessException {
+        Technology tech = new Technology(1L, null, true);
+        given(service.save(tech)).willReturn(null);
+        business.create(tech);
+    }
+
+    /**
+     * METHOD: update
+     * RULE: This method must be update a technology.
+     * CASE: If find the id must be return an updated technology.
+     */
+    @Test
+    public void update_withValidId_mustReturn() throws Exception {
+        Technology tech = TechnologyUtilsTest.createTechnology();
+        given(service.findById(1L)).willReturn(tech);
+        given(service.save(tech)).willReturn(tech);
+        business.update(tech.getId(), tech);
+    }
+
+    /**
+     * METHOD: update
+     * RULE: This method must be update a technology.
+     * CASE: If didn't find the id must be return 404 - NotFoundException
+     */
+    @Test(expected = NotFoundException.class)
+    public void update_withInvalidId_mustReturnNotFoundException() throws Exception {
+        Technology tech = TechnologyUtilsTest.createTechnology();
+        given(service.findById(1L)).willThrow(NotFoundException.class);
+        business.update(tech.getId(), tech);
     }
 
 
