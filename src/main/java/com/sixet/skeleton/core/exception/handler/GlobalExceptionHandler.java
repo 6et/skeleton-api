@@ -3,7 +3,6 @@ package com.sixet.skeleton.core.exception.handler;
 import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.exception.NotFoundException;
-import com.sixet.skeleton.utils.MessageResourceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

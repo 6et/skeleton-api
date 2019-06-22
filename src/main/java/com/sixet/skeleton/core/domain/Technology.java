@@ -41,6 +41,6 @@ public class Technology implements AbstractEntity {
     private boolean active;
 
     public boolean hasName() {
-        return !StringUtils.isEmpty(name);
+        return this.name != null && !StringUtils.isEmpty(this.name);
     }
 }
