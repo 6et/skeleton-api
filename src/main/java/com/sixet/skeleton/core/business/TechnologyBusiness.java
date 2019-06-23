@@ -1,6 +1,5 @@
 package com.sixet.skeleton.core.business;
 
-import com.sixet.skeleton.core.constants.ResponseMessages;
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NoContentException;
@@ -34,7 +33,7 @@ public class TechnologyBusiness {
 
     public Technology create(Technology technology) throws BusinessException {
         if(!technology.hasName()) {
-            throw new BusinessException(ResponseMessages.MESSAGE_ERROR_NAME_REQUIRED);
+            throw new BusinessException("Technology name is required.");
         }
         return service.save(technology);
     }

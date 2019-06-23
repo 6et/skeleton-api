@@ -26,7 +26,7 @@ public class TechnologyAssemblerTest {
      * CASE: If converted must be return
      */
     @Test
-    public void convertDomainToResource_mustReturnResource() {
+    public void convertDomainToResourceMustReturnResource() {
         Technology domain = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         assertEquals(assembler.fromDomain(domain), resource);
@@ -38,7 +38,7 @@ public class TechnologyAssemblerTest {
      * CASE: If converted must be return
      */
     @Test
-    public void convertResourceToDomain_mustReturnDomain() {
+    public void convertResourceToDomainMustReturnDomain() {
         Technology domain = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         assertEquals(assembler.fromResource(resource), domain);
