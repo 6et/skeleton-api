@@ -3,14 +3,10 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/b8602f4af0c842a2a10e44fd9a0642c7)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=6et/skeleton-api&utm_campaign=Badge_Coverage)
 
 ## Pre-requisites
-    *   Java >= 1.8
-    *   Gradle >= 2
-    *   [Lombok](https://projectlombok.org/download.html)
+    - Java >= 1.8
+    - Gradle >= 2
+    - [Lombok](https://projectlombok.org/download.html)
 
 ## Profiles
-
-To run the application in a specific profile you must set the argument:
-``` java
-        -Dspring.profiles.active=dev
-```
-## Packages
+    To run the application in a specific profile you must set the argument:
+    -Dspring.profiles.active=dev
