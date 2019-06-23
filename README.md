@@ -8,5 +8,6 @@
     - [Lombok](https://projectlombok.org/download.html)
 
 ## Profiles
-    To run the application in a specific profile you must set the argument:
+To run the application in a specific profile you must set the argument:
+
     -Dspring.profiles.active=dev
