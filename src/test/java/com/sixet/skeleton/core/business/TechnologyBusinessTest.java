@@ -44,7 +44,7 @@ public class TechnologyBusinessTest {
      * CASE: If didn't find any result must be return a 404 - NoContentException
      */
     @Test(expected = NoContentException.class)
-    public void findAll_withEmptyResult_mustThrowNoContentException() throws NoContentException {
+    public void findAllWithEmptyResultMustThrowNoContentException() throws NoContentException {
         Page<Technology> page = new PageImpl<>(new ArrayList<>(), Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
         business.findAll(PageRequest.of(1,10));
@@ -56,7 +56,7 @@ public class TechnologyBusinessTest {
      * CASE: If find any result must be return a Page<Technology>.
      */
     @Test
-    public void findAll_withResult_mustReturn() throws NoContentException {
+    public void findAllWithResultMustReturn() throws NoContentException {
         Technology tech = TechnologyUtilsTest.createTechnology();
         Technology tech1 = TechnologyUtilsTest.createTechnology();
         Page<Technology> page = new PageImpl<>(Arrays.asList(tech,tech1), Pageable.unpaged(), 1);
@@ -70,7 +70,7 @@ public class TechnologyBusinessTest {
      * CASE: With valid content must be create a technology and return 200 - OK.
      */
     @Test
-    public void create_withValidContent_mustReturn() throws BusinessException {
+    public void createWithValidContentMustReturn() throws BusinessException {
         Technology tech = TechnologyUtilsTest.createTechnology();
         given(service.save(tech)).willReturn(tech);
         business.create(tech);
@@ -82,7 +82,7 @@ public class TechnologyBusinessTest {
      * CASE: With invalid content must be return a 409 - Business Exception.
      */
     @Test(expected = BusinessException.class)
-    public void create_withInvalidContent_mustReturnBusinessException() throws BusinessException {
+    public void createWithInvalidContentMustReturnBusinessException() throws BusinessException {
         Technology tech = new Technology(1L, null, true);
         given(service.save(tech)).willReturn(null);
         business.create(tech);
@@ -94,7 +94,7 @@ public class TechnologyBusinessTest {
      * CASE: If find the id must be return an updated technology.
      */
     @Test
-    public void update_withValidId_mustReturn() throws Exception {
+    public void updateWithValidIdMustReturn() throws Exception {
         Technology tech = TechnologyUtilsTest.createTechnology();
         given(service.findById(1L)).willReturn(tech);
         given(service.save(tech)).willReturn(tech);
@@ -107,7 +107,7 @@ public class TechnologyBusinessTest {
      * CASE: If didn't find the id must be return 404 - NotFoundException
      */
     @Test(expected = NotFoundException.class)
-    public void update_withInvalidId_mustReturnNotFoundException() throws Exception {
+    public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
         Technology tech = TechnologyUtilsTest.createTechnology();
         given(service.findById(1L)).willThrow(NotFoundException.class);
         business.update(tech.getId(), tech);
