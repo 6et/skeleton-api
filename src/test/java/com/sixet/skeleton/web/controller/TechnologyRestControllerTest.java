@@ -59,7 +59,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void get_findAll_withResult_mustReturn() throws Exception {
+    public void findAllWithResultMustReturn() throws Exception {
         Page<Technology> page = new PageImpl<>(Collections.emptyList(), Pageable.unpaged(), 1);
         given(business.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies"))
@@ -75,7 +75,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void get_findAll_withEmptyResult_mustReturnNoContentException() throws Exception {
+    public void findAllWithEmptyResultMustReturnNoContentException() throws Exception {
         given(business.findAll(isA(Pageable.class))).willThrow(NoContentException.class);
         this.mvc.perform(get("/technologies")).andExpect(status().isNoContent());
     }
@@ -88,7 +88,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void post_create_withValidContent_mustReturn() throws Exception {
+    public void createWithValidContentMustReturn() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.create(technology)).willReturn(technology);
@@ -107,7 +107,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void post_create_withInvalidContent_mustReturnBusinessException() throws Exception {
+    public void createWithInvalidContentMustReturnBusinessException() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.create(technology)).willThrow(BusinessException.class);
@@ -125,7 +125,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void put_update_withValidId_mustReturn() throws Exception {
+    public void updateWithValidIdMustReturn() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.update(technology.getId(), technology)).willReturn(technology);
@@ -145,7 +145,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void put_update_withInvalidId_mustReturnNotFoundException() throws Exception {
+    public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.update(technology.getId(), technology)).willThrow(NotFoundException.class);
@@ -164,7 +164,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void delete_withValidId_mustReturn() throws Exception {
+    public void deleteWithValidIdMustReturn() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.delete(technology.getId())).willReturn(technology);
@@ -183,7 +183,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void delete_withInvalidId_mustReturnNotFoundException() throws Exception {
+    public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
         TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         given(business.delete(technology.getId())).willThrow(NotFoundException.class);
