@@ -112,6 +112,30 @@ public class TechnologyBusinessTest {
         given(service.findById(1L)).willThrow(NotFoundException.class);
         business.update(tech.getId(), tech);
     }
+
+    /**
+     * METHOD: delete
+     * RULE: This method must be delete a technology.
+     * CASE: If find the id must be return a deleted technology.
+     */
+    @Test
+    public void deleteWithValidIdMustReturn() throws Exception {
+        Technology tech = TechnologyUtilsTest.createTechnology();
+        given(service.findById(1L)).willReturn(tech);
+        business.delete(tech.getId());
+    }
+
+    /**
+     * METHOD: delete
+     * RULE: This method must be delete a technology.
+     * CASE: If didn't find the id must be return 404 - NotFoundException
+     */
+    @Test(expected = NotFoundException.class)
+    public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
+        Technology tech = TechnologyUtilsTest.createTechnology();
+        given(service.findById(1L)).willThrow(NotFoundException.class);
+        business.delete(tech.getId());
+    }
 }
 
 
