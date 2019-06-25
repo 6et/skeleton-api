@@ -11,3 +11,6 @@
 To run the application in a specific profile you must set the argument:
 
     -Dspring.profiles.active=dev
+
+## Useful links
+https://github.com/paypal/api-standards/blob/master/api-style-guide.md

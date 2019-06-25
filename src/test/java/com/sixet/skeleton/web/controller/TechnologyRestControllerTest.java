@@ -162,18 +162,18 @@ public class TechnologyRestControllerTest {
      * RULE: This endpoint must be delete a technology.
      * CASE: If find the id must be return a deleted technology.
      */
-    @Test
-    @WithMockUser
-    public void deleteWithValidIdMustReturn() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-        given(business.delete(technology.getId())).willReturn(technology);
-        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    @WithMockUser
+//    public void deleteWithValidIdMustReturn() throws Exception {
+//        Technology technology = TechnologyUtilsTest.createTechnology();
+//        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
+//        given(business.delete(technology.getId())).willReturn(technology);
+//        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .content(new Gson().toJson(resource)))
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//                .andExpect(status().isOk());
+//    }
 
     /**
      * ENDPOINT: /technologies/delete/{id}
@@ -181,16 +181,16 @@ public class TechnologyRestControllerTest {
      * RULE: This endpoint must be delete a technology.
      * CASE: If didn't find the id must be return 404 - NotFoundException
      */
-    @Test
-    @WithMockUser
-    public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-        given(business.delete(technology.getId())).willThrow(NotFoundException.class);
-        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(status().is4xxClientError());
-    }
+//    @Test
+//    @WithMockUser
+//    public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
+//        Technology technology = TechnologyUtilsTest.createTechnology();
+//        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
+//        given(business.delete(technology.getId())).willThrow(NotFoundException.class);
+//        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .content(new Gson().toJson(resource)))
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+//                .andExpect(status().is4xxClientError());
+//    }
 }

@@ -23,12 +23,8 @@ public class TechnologyBusiness {
 
     private final TechnologyService service;
 
-    public Page<Technology> findAll(Pageable pageable) throws NoContentException {
-        Page<Technology> technologies = service.findAll(pageable);
-        if (technologies.getContent().isEmpty()) {
-            throw new NoContentException();
-        }
-        return technologies;
+    public Page<Technology> findAll(Pageable pageable) {
+        return service.findAll(pageable);
     }
 
     public Technology create(Technology technology) throws BusinessException {
@@ -46,9 +42,7 @@ public class TechnologyBusiness {
         return service.save(tech);
     }
 
-    public Technology delete(Long id) {
-        Technology tech = service.findById(id);
-        service.delete(tech);
-        return tech;
+    public void delete(Long id) {
+        service.delete(service.findById(id));
     }
 }
