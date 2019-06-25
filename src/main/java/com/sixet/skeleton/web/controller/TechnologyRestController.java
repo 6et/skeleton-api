@@ -82,11 +82,11 @@ public class TechnologyRestController {
 
     @ApiOperation(value = "Delete a technology.")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Successfully technology deleted."),
-            @ApiResponse(
-                    code = 404,
-                    message = "The resource you were trying to reach was not found",
-                    response = StandardErrorHandler.class)
+        @ApiResponse(code = 204, message = "Successfully technology deleted."),
+        @ApiResponse(
+                code = 404,
+                message = "The resource you were trying to reach was not found",
+                response = StandardErrorHandler.class)
     })
     @DeleteMapping(value = "/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
