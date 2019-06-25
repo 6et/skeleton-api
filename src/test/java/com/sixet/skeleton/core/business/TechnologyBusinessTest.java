@@ -20,7 +20,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
+import static java.util.Arrays.asList;
+import static junit.framework.TestCase.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
 
@@ -41,13 +47,13 @@ public class TechnologyBusinessTest {
     /**
      * METHOD: findAll
      * RULE: This method must be return Page<Technology>.
-     * CASE: If didn't find any result must be return a 404 - NoContentException
+     * CASE: If didn't find any result must be return a empty list.
      */
-    @Test(expected = NoContentException.class)
-    public void findAllWithEmptyResultMustThrowNoContentException() throws NoContentException {
+    @Test
+    public void findAllWithEmptyResultMustThrowNoContentException() {
         Page<Technology> page = new PageImpl<>(new ArrayList<>(), Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
-        business.findAll(PageRequest.of(1,10));
+        assertTrue(business.findAll(PageRequest.of(1,10)).isEmpty());
     }
 
     /**
@@ -57,11 +63,11 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void findAllWithResultMustReturn() throws NoContentException {
-        Technology tech = TechnologyUtilsTest.createTechnology();
-        Technology tech1 = TechnologyUtilsTest.createTechnology();
-        Page<Technology> page = new PageImpl<>(Arrays.asList(tech,tech1), Pageable.unpaged(), 1);
+        List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
+        Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
-        business.findAll(PageRequest.of(1,2));
+        assertFalse(business.findAll(PageRequest.of(1,2)).isEmpty());
+        assertThat(technologies, hasSize(2));
     }
 
     /**
@@ -71,9 +77,9 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void createWithValidContentMustReturn() throws BusinessException {
-        Technology tech = TechnologyUtilsTest.createTechnology();
+        Technology tech = createTechnology();
         given(service.save(tech)).willReturn(tech);
-        business.create(tech);
+        assertNotNull(business.create(tech));
     }
 
     /**
@@ -95,7 +101,7 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void updateWithValidIdMustReturn() throws Exception {
-        Technology tech = TechnologyUtilsTest.createTechnology();
+        Technology tech = createTechnology();
         given(service.findById(1L)).willReturn(tech);
         given(service.save(tech)).willReturn(tech);
         business.update(tech.getId(), tech);
@@ -108,7 +114,7 @@ public class TechnologyBusinessTest {
      */
     @Test(expected = NotFoundException.class)
     public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology tech = TechnologyUtilsTest.createTechnology();
+        Technology tech = createTechnology();
         given(service.findById(1L)).willThrow(NotFoundException.class);
         business.update(tech.getId(), tech);
     }
@@ -120,7 +126,7 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void deleteWithValidIdMustReturn() throws Exception {
-        Technology tech = TechnologyUtilsTest.createTechnology();
+        Technology tech = createTechnology();
         given(service.findById(1L)).willReturn(tech);
         business.delete(tech.getId());
     }
@@ -132,7 +138,7 @@ public class TechnologyBusinessTest {
      */
     @Test(expected = NotFoundException.class)
     public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology tech = TechnologyUtilsTest.createTechnology();
+        Technology tech = createTechnology();
         given(service.findById(1L)).willThrow(NotFoundException.class);
         business.delete(tech.getId());
     }

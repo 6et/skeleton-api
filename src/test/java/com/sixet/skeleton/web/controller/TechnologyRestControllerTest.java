@@ -23,10 +23,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
+import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
+import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -60,24 +65,12 @@ public class TechnologyRestControllerTest {
     @Test
     @WithMockUser
     public void findAllWithResultMustReturn() throws Exception {
-        Page<Technology> page = new PageImpl<>(Collections.emptyList(), Pageable.unpaged(), 1);
+        List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
+        Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
         given(business.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-    }
-
-    /**
-     * ENDPOINT: /technologies
-     * METHOD: GET
-     * RULE: This endpoint must be return a technology list.
-     * CASE: If didn't find any result must be return a 404 - NoContentException
-     */
-    @Test
-    @WithMockUser
-    public void findAllWithEmptyResultMustReturnNoContentException() throws Exception {
-        given(business.findAll(isA(Pageable.class))).willThrow(NoContentException.class);
-        this.mvc.perform(get("/technologies")).andExpect(status().isNoContent());
     }
 
     /**
@@ -95,7 +88,7 @@ public class TechnologyRestControllerTest {
         this.mvc.perform(post("/technologies/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new Gson().toJson(resource)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(resource.getName())));
     }
 
@@ -162,35 +155,9 @@ public class TechnologyRestControllerTest {
      * RULE: This endpoint must be delete a technology.
      * CASE: If find the id must be return a deleted technology.
      */
-//    @Test
-//    @WithMockUser
-//    public void deleteWithValidIdMustReturn() throws Exception {
-//        Technology technology = TechnologyUtilsTest.createTechnology();
-//        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-//        given(business.delete(technology.getId())).willReturn(technology);
-//        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .content(new Gson().toJson(resource)))
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-//                .andExpect(status().isOk());
-//    }
-
-    /**
-     * ENDPOINT: /technologies/delete/{id}
-     * METHOD: DELETE
-     * RULE: This endpoint must be delete a technology.
-     * CASE: If didn't find the id must be return 404 - NotFoundException
-     */
-//    @Test
-//    @WithMockUser
-//    public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
-//        Technology technology = TechnologyUtilsTest.createTechnology();
-//        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-//        given(business.delete(technology.getId())).willThrow(NotFoundException.class);
-//        this.mvc.perform(delete("/technologies/delete/{id}", resource.getId())
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .content(new Gson().toJson(resource)))
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-//                .andExpect(status().is4xxClientError());
-//    }
+    @Test
+    @WithMockUser
+    public void deleteWithValidIdMustReturn() throws Exception {
+        this.mvc.perform(delete("/technologies/delete/{id}", 1L)).andExpect(status().isNoContent());
+    }
 }
