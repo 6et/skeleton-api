@@ -160,4 +160,9 @@ public class TechnologyRestControllerTest {
         doNothing().when(business).delete(1L);
         this.mvc.perform(delete("/technologies/delete/{id}", 1L)).andExpect(status().isNoContent());
     }
+
+    //testar exception
+    //findall teste sempre list cheia lista vazia
+    //
+    //testar exception sempre no controller
 }
