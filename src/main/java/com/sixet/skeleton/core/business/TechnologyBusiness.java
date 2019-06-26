@@ -36,9 +36,7 @@ public class TechnologyBusiness {
 
     public Technology update(Long id, Technology technology)  {
         Technology tech = service.findById(id);
-        technology.setId(tech.getId());
-        tech.setName(technology.getName());
-        tech.setActive(technology.isActive());
+        tech.updateFields(technology);
         return service.save(tech);
     }
 

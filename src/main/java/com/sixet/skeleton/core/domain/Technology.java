@@ -22,8 +22,6 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Entity
-@Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Technology implements AbstractEntity {
@@ -42,5 +40,10 @@ public class Technology implements AbstractEntity {
 
     public boolean hasName() {
         return this.name != null && !StringUtils.isEmpty(this.name);
+    }
+
+    public void updateFields(Technology technology){
+        this.name = technology.getName();
+        this.active = technology.isActive();
     }
 }
