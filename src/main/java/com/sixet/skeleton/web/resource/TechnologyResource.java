@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * {@link com.sixet.skeleton.core.domain.Technology} resource representation.
  * @author gtrevisan
@@ -17,6 +19,8 @@ import lombok.NoArgsConstructor;
 public class TechnologyResource {
 
     private Long id;
+
+    @NotNull(message = "in")
     private String name;
     private boolean active;
 }

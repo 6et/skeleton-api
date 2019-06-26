@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.sixet.skeleton.core.business.TechnologyBusiness;
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
-import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.utils.TechnologyUtilsTest;
 import com.sixet.skeleton.web.resource.TechnologyResource;
@@ -30,6 +29,8 @@ import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -156,6 +157,7 @@ public class TechnologyRestControllerTest {
     @Test
     @WithMockUser
     public void deleteWithValidIdMustReturn() throws Exception {
+        doNothing().when(business).delete(1L);
         this.mvc.perform(delete("/technologies/delete/{id}", 1L)).andExpect(status().isNoContent());
     }
 }

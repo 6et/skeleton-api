@@ -2,7 +2,6 @@ package com.sixet.skeleton.core.business;
 
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
-import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.service.TechnologyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

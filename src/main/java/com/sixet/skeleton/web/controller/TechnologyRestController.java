@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 /**
@@ -62,7 +63,7 @@ public class TechnologyRestController {
     })
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<TechnologyResource> create(@RequestBody TechnologyResource res) throws BusinessException {
+    public ResponseEntity<TechnologyResource> create(@Valid @RequestBody TechnologyResource res) throws BusinessException {
         TechnologyResource resource = assembler.fromDomain(business.create(assembler.fromResource(res)));
         return ResponseEntity.created(URI.create("/technologies/" + resource.getId())).body(resource);
     }
