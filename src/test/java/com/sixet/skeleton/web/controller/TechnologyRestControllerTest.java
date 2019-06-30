@@ -27,10 +27,10 @@ import java.util.List;
 
 import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
 import static java.util.Arrays.asList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -63,9 +63,25 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void findAllWithResultMustReturn() throws Exception {
+    public void findAllMustReturnAFilledList() throws Exception {
         List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
         Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
+        given(business.findAll(isA(Pageable.class))).willReturn(page);
+        this.mvc.perform(get("/technologies"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+    }
+
+    /**
+     * ENDPOINT: /technologies
+     * METHOD: GET
+     * RULE: This endpoint must be return the technology list.
+     * CASE: If didn't find any result must be return a empty technology list.
+     */
+    @Test
+    @WithMockUser
+    public void findAllMustReturnEmptyList() throws Exception {
+        Page<Technology> page = new PageImpl<>(new ArrayList<>(), Pageable.unpaged(), 1);
         given(business.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies"))
                 .andExpect(status().isOk())
@@ -157,12 +173,21 @@ public class TechnologyRestControllerTest {
     @Test
     @WithMockUser
     public void deleteWithValidIdMustReturn() throws Exception {
-        doNothing().when(business).delete(1L);
-        this.mvc.perform(delete("/technologies/delete/{id}", 1L)).andExpect(status().isNoContent());
+        doNothing().when(business).delete(anyLong());
+        this.mvc.perform(delete("/technologies/delete/{id}", anyLong())).andExpect(status().isNoContent());
     }
 
-    //testar exception
-    //findall teste sempre list cheia lista vazia
-    //
-    //testar exception sempre no controller
+    /**
+     * ENDPOINT: /technologies/delete/{id}
+     * METHOD: DELETE
+     * RULE: This endpoint must be delete a technology.
+     * CASE: If didn't find the id must be return a deleted technology.
+     */
+    @Test
+    @WithMockUser
+    public void deleteWithValidIdMustReturnBusinessException() throws Exception {
+        doThrow(NotFoundException.class).when(business).delete(anyLong());
+        this.mvc.perform(delete("/technologies/delete/{id}", anyLong()))
+                .andExpect(status().is4xxClientError());
+    }
 }

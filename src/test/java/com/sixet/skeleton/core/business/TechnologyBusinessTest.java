@@ -19,7 +19,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
@@ -50,7 +49,7 @@ public class TechnologyBusinessTest {
      * CASE: If didn't find any result must be return a empty list.
      */
     @Test
-    public void findAllWithEmptyResultMustThrowNoContentException() {
+    public void findAllMustReturnEmptyList() {
         Page<Technology> page = new PageImpl<>(new ArrayList<>(), Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
         assertTrue(business.findAll(PageRequest.of(1,10)).isEmpty());
@@ -62,7 +61,7 @@ public class TechnologyBusinessTest {
      * CASE: If find any result must be return a Page<Technology>.
      */
     @Test
-    public void findAllWithResultMustReturn() throws NoContentException {
+    public void findAllMustReturnNotAnEmptyList() {
         List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
         Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
@@ -100,7 +99,7 @@ public class TechnologyBusinessTest {
      * CASE: If find the id must be return an updated technology.
      */
     @Test
-    public void updateWithValidIdMustReturn() throws Exception {
+    public void updateWithValidIdMustReturn() {
         Technology tech = createTechnology();
         given(service.findById(1L)).willReturn(tech);
         given(service.save(tech)).willReturn(tech);
@@ -125,7 +124,7 @@ public class TechnologyBusinessTest {
      * CASE: If find the id must be return a deleted technology.
      */
     @Test
-    public void deleteWithValidIdMustReturn() throws Exception {
+    public void deleteWithValidIdMustReturn() {
         Technology tech = createTechnology();
         given(service.findById(1L)).willReturn(tech);
         business.delete(tech.getId());
