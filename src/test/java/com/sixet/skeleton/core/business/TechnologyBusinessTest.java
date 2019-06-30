@@ -2,10 +2,8 @@ package com.sixet.skeleton.core.business;
 
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
-import com.sixet.skeleton.core.exception.NoContentException;
 import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.core.service.TechnologyService;
-import com.sixet.skeleton.utils.TechnologyUtilsTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
 import static java.util.Arrays.asList;
 import static junit.framework.TestCase.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 /**
@@ -36,6 +33,11 @@ import static org.mockito.BDDMockito.given;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class TechnologyBusinessTest {
+
+    private static final Technology JAVA = new Technology(1L, "Java", true);
+    private static final Technology ANGULAR = new Technology(2L, "Angular", true);
+    private static final List<Technology> TECHNOLOGY_LIST = new ArrayList<>(asList(JAVA, ANGULAR));
+
 
     @MockBean
     private TechnologyService service;
@@ -61,12 +63,11 @@ public class TechnologyBusinessTest {
      * CASE: If find any result must be return a Page<Technology>.
      */
     @Test
-    public void findAllMustReturnNotAnEmptyList() {
-        List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
-        Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
+    public void findAllMustReturnAFilledList() {
+        Page<Technology> page = new PageImpl<>(TECHNOLOGY_LIST, Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
         assertFalse(business.findAll(PageRequest.of(1,2)).isEmpty());
-        assertThat(technologies, hasSize(2));
+        assertThat(TECHNOLOGY_LIST, hasSize(2));
     }
 
     /**
@@ -76,9 +77,8 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void createWithValidContentMustReturn() throws BusinessException {
-        Technology tech = createTechnology();
-        given(service.save(tech)).willReturn(tech);
-        assertNotNull(business.create(tech));
+        given(service.save(JAVA)).willReturn(JAVA);
+        assertNotNull(business.create(JAVA));
     }
 
     /**
@@ -100,10 +100,9 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void updateWithValidIdMustReturn() {
-        Technology tech = createTechnology();
-        given(service.findById(1L)).willReturn(tech);
-        given(service.save(tech)).willReturn(tech);
-        business.update(tech.getId(), tech);
+        given(service.findById(anyLong())).willReturn(JAVA);
+        given(service.save(JAVA)).willReturn(JAVA);
+        assertNotNull(business.update(JAVA.getId(), JAVA));
     }
 
     /**
@@ -113,9 +112,8 @@ public class TechnologyBusinessTest {
      */
     @Test(expected = NotFoundException.class)
     public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology tech = createTechnology();
-        given(service.findById(1L)).willThrow(NotFoundException.class);
-        business.update(tech.getId(), tech);
+        given(service.findById(anyLong())).willThrow(NotFoundException.class);
+        business.update(JAVA.getId(), JAVA);
     }
 
     /**
@@ -125,9 +123,8 @@ public class TechnologyBusinessTest {
      */
     @Test
     public void deleteWithValidIdMustReturn() {
-        Technology tech = createTechnology();
-        given(service.findById(1L)).willReturn(tech);
-        business.delete(tech.getId());
+        given(service.findById(anyLong())).willReturn(JAVA);
+        business.delete(JAVA.getId());
     }
 
     /**
@@ -137,9 +134,8 @@ public class TechnologyBusinessTest {
      */
     @Test(expected = NotFoundException.class)
     public void deleteWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology tech = createTechnology();
-        given(service.findById(1L)).willThrow(NotFoundException.class);
-        business.delete(tech.getId());
+        given(service.findById(anyLong())).willThrow(NotFoundException.class);
+        business.delete(JAVA.getId());
     }
 }
 
