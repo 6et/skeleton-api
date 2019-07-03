@@ -28,6 +28,11 @@ public class TechnologyService {
         return repository.findAll(pageable);
     }
 
+    /**
+     * Searches a {@link Technology} by its login
+     * @param id of the {@link Technology}
+     * @return {@link Technology}
+     */
     @Transactional(readOnly = true)
     public Technology findById(Long id) {
         return repository.findById(id).orElseThrow(() ->

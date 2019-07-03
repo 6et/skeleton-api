@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 /**
- * TechnologyBusiness class provides the business rules.
+ * TechnologyBusiness class provides the business rules for Technology
  * @since 11/06/2019
  * @author <a href="mailto:gtrevisane@gmail.com">Get Trevisan</a>
  */

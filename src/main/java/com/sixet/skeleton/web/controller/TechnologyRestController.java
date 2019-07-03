@@ -49,7 +49,7 @@ public class TechnologyRestController {
         @ApiResponse(code = 200, message = "Successfully retrieved list", response = TechnologyResource.class)
     })
     @GetMapping
-    public ResponseEntity<Page<TechnologyResource>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<TechnologyResource>> get(Pageable pageable) {
         return ResponseEntity.ok(assembler.fromDomain(business.findAll(pageable)));
     }
 
