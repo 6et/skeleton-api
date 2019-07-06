@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
+import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnologyResource;
 import static java.util.Arrays.asList;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
@@ -49,6 +49,10 @@ import static org.hamcrest.core.Is.is;
 @RunWith(SpringRunner.class)
 public class TechnologyRestControllerTest {
 
+    private static final Technology JAVA = new Technology(1L, "Java", true);
+    private static final Technology ANGULAR = new Technology(2L, "Angular", true);
+    private static final List<Technology> TECHNOLOGY_LIST = new ArrayList<>(asList(JAVA, ANGULAR));
+
     @Autowired
     private MockMvc mvc;
 
@@ -63,13 +67,18 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void findAllMustReturnAFilledList() throws Exception {
-        List<Technology> technologies = new ArrayList<>(asList(createTechnology(), createTechnology()));
-        Page<Technology> page = new PageImpl<>(technologies, Pageable.unpaged(), 1);
+    public void getTechnologiesShouldReturnTechnologyList() throws Exception {
+        Page<Technology> page = new PageImpl<>(TECHNOLOGY_LIST, PageRequest.of(1,2, new Sort(  Sort.Direction.ASC, "name")), 2);
         given(business.findAll(isA(Pageable.class))).willReturn(page);
-        this.mvc.perform(get("/technologies"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+        this.mvc.perform(get("/technologies?page=1&size=2&sort=name,asc")
+                .content(new Gson().toJson(page)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.totalPages",is(2)))
+                .andExpect(jsonPath("$.content", hasSize(2)))
+                .andExpect(jsonPath("$.pageable.pageNumber", is(1)))
+                .andExpect(jsonPath("$.pageable.pageSize", is(2)))
+                .andExpect(jsonPath("$.pageable.sort.sorted", is(true)))
+                .andExpect(status().isOk());
     }
 
     /**
@@ -80,12 +89,14 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void findAllMustReturnEmptyList() throws Exception {
-        Page<Technology> page = new PageImpl<>(new ArrayList<>(), Pageable.unpaged(), 1);
+    public void getTechnologiesShouldReturnTechnologyEmptyList() throws Exception {
+        Page<Technology> page = new PageImpl<>(new ArrayList<>());
         given(business.findAll(isA(Pageable.class))).willReturn(page);
-        this.mvc.perform(get("/technologies"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+        this.mvc.perform(get("/technologies")
+                .content(new Gson().toJson(page)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.content", hasSize(0)))
+                .andExpect(status().isOk());
     }
 
     /**
@@ -96,15 +107,15 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void createWithValidContentMustReturn() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-        given(business.create(technology)).willReturn(technology);
+    public void shouldCreateTechnology() throws Exception {
+        Technology technology = createTechnology();
+        TechnologyResource resource = createTechnologyResource();
+        given(business.create(any())).willReturn(technology);
         this.mvc.perform(post("/technologies/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new Gson().toJson(resource)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is(resource.getName())));
+                .andExpect(jsonPath("$.name", is(resource.getName())))
+                .andExpect(status().isCreated());
     }
 
     /**
@@ -115,9 +126,9 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void createWithInvalidContentMustReturnBusinessException() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
+    public void shouldCreateTechnologyMustReturnBusinessException() throws Exception {
+        Technology technology = createTechnology();
+        TechnologyResource resource = createTechnologyResource();
         given(business.create(technology)).willThrow(BusinessException.class);
         this.mvc.perform(post("/technologies/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -133,18 +144,17 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void updateWithValidIdMustReturn() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-        given(business.update(technology.getId(), technology)).willReturn(technology);
-        this.mvc.perform(put("/technologies/update/{id}", resource.getId())
+    public void shouldUpdateTechnology() throws Exception {
+        Technology technology = createTechnology();
+        given(business.update(anyLong(), any())).willReturn(technology);
+        this.mvc.perform(put("/technologies/update/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
-                .andExpect(status().isOk())
+                .content(new Gson().toJson(technology)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.name", is(resource.getName())));
-    }
+                .andExpect(jsonPath("$.name", is(technology.getName())))
+                .andExpect(status().isOk());
 
+    }
     /**
      * ENDPOINT: /technologies/update/{id}
      * METHOD: PUT
@@ -155,11 +165,10 @@ public class TechnologyRestControllerTest {
     @WithMockUser
     public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
         Technology technology = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
-        given(business.update(technology.getId(), technology)).willThrow(NotFoundException.class);
-        this.mvc.perform(put("/technologies/update/{id}", resource.getId())
+        given(business.update(anyLong(), any())).willThrow(NotFoundException.class);
+        this.mvc.perform(put("/technologies/update/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
+                .content(new Gson().toJson(technology)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().is4xxClientError());
     }

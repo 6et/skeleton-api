@@ -22,9 +22,12 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static junit.framework.TestCase.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  *
@@ -66,8 +69,9 @@ public class TechnologyBusinessTest {
     public void findAllMustReturnAFilledList() {
         Page<Technology> page = new PageImpl<>(TECHNOLOGY_LIST, Pageable.unpaged(), 1);
         given(service.findAll(isA(Pageable.class))).willReturn(page);
-        assertFalse(business.findAll(PageRequest.of(1,2)).isEmpty());
-        assertThat(TECHNOLOGY_LIST, hasSize(2));
+        Page<Technology> list =  business.findAll(PageRequest.of(1,2));
+        assertFalse(list.isEmpty());
+        assertThat(list.getContent(), hasSize(2));
     }
 
     /**
@@ -78,7 +82,9 @@ public class TechnologyBusinessTest {
     @Test
     public void createWithValidContentMustReturn() throws BusinessException {
         given(service.save(JAVA)).willReturn(JAVA);
-        assertNotNull(business.create(JAVA));
+        Technology technologyCreated = business.create(JAVA);
+        assertNotNull(technologyCreated);
+        assertEquals(technologyCreated.getName(), JAVA.getName());
     }
 
     /**
@@ -88,9 +94,8 @@ public class TechnologyBusinessTest {
      */
     @Test(expected = BusinessException.class)
     public void createWithInvalidContentMustReturnBusinessException() throws BusinessException {
-        Technology tech = new Technology(1L, null, true);
-        given(service.save(tech)).willReturn(null);
-        business.create(tech);
+        given(service.save(new Technology())).willReturn(null);
+        business.create(new Technology());
     }
 
     /**
@@ -102,7 +107,10 @@ public class TechnologyBusinessTest {
     public void updateWithValidIdMustReturn() {
         given(service.findById(anyLong())).willReturn(JAVA);
         given(service.save(JAVA)).willReturn(JAVA);
-        assertNotNull(business.update(JAVA.getId(), JAVA));
+        Technology technologyUpdated = business.update(JAVA.getId(), JAVA);
+        assertEquals(technologyUpdated.getName(), JAVA.getName());
+        assertEquals(technologyUpdated.getId(), JAVA.getId());
+
     }
 
     /**
