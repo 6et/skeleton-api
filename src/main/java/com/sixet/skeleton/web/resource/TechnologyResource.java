@@ -20,7 +20,8 @@ public class TechnologyResource {
 
     private Long id;
 
-    @NotNull(message = "in")
+    @NotNull(message = "Name is required.")
     private String name;
+
     private boolean active;
 }

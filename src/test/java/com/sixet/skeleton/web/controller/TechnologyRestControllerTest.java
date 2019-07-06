@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnology;
 import static com.sixet.skeleton.utils.TechnologyUtilsTest.createTechnologyResource;
 import static java.util.Arrays.asList;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -49,9 +48,9 @@ import static org.hamcrest.core.Is.is;
 @RunWith(SpringRunner.class)
 public class TechnologyRestControllerTest {
 
-    private static final Technology JAVA = new Technology(1L, "Java", true);
-    private static final Technology ANGULAR = new Technology(2L, "Angular", true);
-    private static final List<Technology> TECHNOLOGY_LIST = new ArrayList<>(asList(JAVA, ANGULAR));
+    private static final Technology JAVA_TECHNOLOGY = new Technology(1L, "Java", true);
+    private static final Technology ANGULAR_TECHNOLOGY = new Technology(2L, "Angular", true);
+    private static final List<Technology> TECHNOLOGY_LIST = new ArrayList<>(asList(JAVA_TECHNOLOGY, ANGULAR_TECHNOLOGY));
 
     @Autowired
     private MockMvc mvc;
@@ -67,8 +66,9 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void getTechnologiesShouldReturnTechnologyList() throws Exception {
-        Page<Technology> page = new PageImpl<>(TECHNOLOGY_LIST, PageRequest.of(1,2, new Sort(  Sort.Direction.ASC, "name")), 2);
+    public void getTechnologiesList() throws Exception {
+        Page<Technology> page = new PageImpl<>(TECHNOLOGY_LIST,
+                PageRequest.of(1,2, new Sort(  Sort.Direction.ASC, "name")), 2);
         given(business.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies?page=1&size=2&sort=name,asc")
                 .content(new Gson().toJson(page)))
@@ -89,7 +89,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void getTechnologiesShouldReturnTechnologyEmptyList() throws Exception {
+    public void getTechnologiesListShouldReturnEmptyList() throws Exception {
         Page<Technology> page = new PageImpl<>(new ArrayList<>());
         given(business.findAll(isA(Pageable.class))).willReturn(page);
         this.mvc.perform(get("/technologies")
@@ -107,14 +107,12 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void shouldCreateTechnology() throws Exception {
-        Technology technology = createTechnology();
-        TechnologyResource resource = createTechnologyResource();
-        given(business.create(any())).willReturn(technology);
+    public void createTechnology() throws Exception {
+        given(business.create(any())).willReturn(JAVA_TECHNOLOGY);
         this.mvc.perform(post("/technologies/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
-                .andExpect(jsonPath("$.name", is(resource.getName())))
+                .content(new Gson().toJson(JAVA_TECHNOLOGY)))
+                .andExpect(jsonPath("$.name", is(JAVA_TECHNOLOGY.getName())))
                 .andExpect(status().isCreated());
     }
 
@@ -126,13 +124,11 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void shouldCreateTechnologyMustReturnBusinessException() throws Exception {
-        Technology technology = createTechnology();
-        TechnologyResource resource = createTechnologyResource();
-        given(business.create(technology)).willThrow(BusinessException.class);
+    public void createTechnologyShouldReturnBusinessException() throws Exception {
+        given(business.create(any())).willThrow(BusinessException.class);
         this.mvc.perform(post("/technologies/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(resource)))
+                .content(new Gson().toJson(new TechnologyResource(1L, "java", true))))
                 .andExpect(status().is4xxClientError());
     }
 
@@ -144,14 +140,13 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void shouldUpdateTechnology() throws Exception {
-        Technology technology = createTechnology();
-        given(business.update(anyLong(), any())).willReturn(technology);
+    public void updateTechnology() throws Exception {
+        given(business.update(anyLong(), any())).willReturn(JAVA_TECHNOLOGY);
         this.mvc.perform(put("/technologies/update/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(technology)))
+                .content(new Gson().toJson(JAVA_TECHNOLOGY)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.name", is(technology.getName())))
+                .andExpect(jsonPath("$.name", is(JAVA_TECHNOLOGY.getName())))
                 .andExpect(status().isOk());
 
     }
@@ -163,12 +158,11 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void updateWithInvalidIdMustReturnNotFoundException() throws Exception {
-        Technology technology = TechnologyUtilsTest.createTechnology();
+    public void updateTechnologyShouldReturnNotFoundException() throws Exception {
         given(business.update(anyLong(), any())).willThrow(NotFoundException.class);
         this.mvc.perform(put("/technologies/update/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new Gson().toJson(technology)))
+                .content(new Gson().toJson(JAVA_TECHNOLOGY)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().is4xxClientError());
     }
@@ -181,7 +175,7 @@ public class TechnologyRestControllerTest {
      */
     @Test
     @WithMockUser
-    public void deleteWithValidIdMustReturn() throws Exception {
+    public void deleteTechnology() throws Exception {
         doNothing().when(business).delete(anyLong());
         this.mvc.perform(delete("/technologies/delete/{id}", anyLong())).andExpect(status().isNoContent());
     }
@@ -190,11 +184,11 @@ public class TechnologyRestControllerTest {
      * ENDPOINT: /technologies/delete/{id}
      * METHOD: DELETE
      * RULE: This endpoint must be delete a technology.
-     * CASE: If didn't find the id must be return a deleted technology.
+     * CASE: If didn't find the id must be return a NotFoundException.class
      */
     @Test
     @WithMockUser
-    public void deleteWithValidIdMustReturnBusinessException() throws Exception {
+    public void deleteTechnologyShouldReturnNotFoundException() throws Exception {
         doThrow(NotFoundException.class).when(business).delete(anyLong());
         this.mvc.perform(delete("/technologies/delete/{id}", anyLong()))
                 .andExpect(status().is4xxClientError());
