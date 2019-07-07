@@ -2,7 +2,6 @@ package com.sixet.skeleton.web.assembler;
 
 import com.sixet.skeleton.BaseTest;
 import com.sixet.skeleton.core.domain.Technology;
-import com.sixet.skeleton.utils.TechnologyUtilsTest;
 import com.sixet.skeleton.web.resource.TechnologyResource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.assertEquals;
 
 public class TechnologyAssemblerTest extends BaseTest {
+
+    private static final Technology domain = new Technology(1L, "Java", true);
+    private static final TechnologyResource resource = new TechnologyResource(1L, "Java", true);
 
     @Autowired
     private TechnologyAssembler assembler;
@@ -21,8 +23,6 @@ public class TechnologyAssemblerTest extends BaseTest {
      */
     @Test
     public void convertDomainToResourceMustReturnResource() {
-        Technology domain = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         assertEquals(assembler.fromDomain(domain), resource);
     }
 
@@ -33,8 +33,6 @@ public class TechnologyAssemblerTest extends BaseTest {
      */
     @Test
     public void convertResourceToDomainMustReturnDomain() {
-        Technology domain = TechnologyUtilsTest.createTechnology();
-        TechnologyResource resource = TechnologyUtilsTest.createTechnologyResource();
         assertEquals(assembler.fromResource(resource), domain);
     }
 }
