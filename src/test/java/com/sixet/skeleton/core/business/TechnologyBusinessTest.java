@@ -1,17 +1,14 @@
 package com.sixet.skeleton.core.business;
 
+import com.sixet.skeleton.BaseTest;
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.core.service.TechnologyService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +16,11 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static junit.framework.TestCase.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
-/**
- *
- */
-@ActiveProfiles("test")
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class TechnologyBusinessTest {
+public class TechnologyBusinessTest extends BaseTest {
 
     private static final Technology JAVA_TECHNOLOGY = new Technology(1L, "Java", true);
     private static final Technology ANGULAR_TECHNOLOGY = new Technology(2L, "Angular", true);
@@ -124,11 +112,11 @@ public class TechnologyBusinessTest {
      * RULE: This method must be delete a technology.
      * CASE: If find the id must be return a deleted technology.
      */
-//    @Test
-//    public void deleteWithValidIdMustReturn() {
-//        given(service.findById(anyLong())).willReturn(JAVA_TECHNOLOGY);
-//        assertbusiness.delete(JAVA_TECHNOLOGY.getId());
-//    }
+    @Test
+    public void deleteWithValidIdMustReturn() {
+        given(service.findById(anyLong())).willReturn(JAVA_TECHNOLOGY);
+        business.delete(JAVA_TECHNOLOGY.getId());
+    }
 
     /**
      * METHOD: delete

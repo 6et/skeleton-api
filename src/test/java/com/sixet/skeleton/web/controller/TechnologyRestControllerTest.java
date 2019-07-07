@@ -1,6 +1,7 @@
 package com.sixet.skeleton.web.controller;
 
 import com.google.gson.Gson;
+import com.sixet.skeleton.BaseTest;
 import com.sixet.skeleton.core.business.TechnologyBusiness;
 import com.sixet.skeleton.core.domain.Technology;
 import com.sixet.skeleton.core.exception.BusinessException;
@@ -39,14 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.core.Is.is;
 
-/**
- *
- */
-@SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-@RunWith(SpringRunner.class)
-public class TechnologyRestControllerTest {
+public class TechnologyRestControllerTest extends BaseTest {
 
     private static final Technology JAVA_TECHNOLOGY = new Technology(1L, "Java", true);
     private static final Technology ANGULAR_TECHNOLOGY = new Technology(2L, "Angular", true);
