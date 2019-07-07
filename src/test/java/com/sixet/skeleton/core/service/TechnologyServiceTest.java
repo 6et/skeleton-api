@@ -3,27 +3,27 @@ package com.sixet.skeleton.core.service;
 
 import com.sixet.skeleton.BaseTest;
 import com.sixet.skeleton.core.domain.Technology;
-import com.sixet.skeleton.core.exception.BusinessException;
 import com.sixet.skeleton.core.exception.NotFoundException;
 import com.sixet.skeleton.core.repository.TechnologyRepository;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.*;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -64,21 +64,17 @@ public class TechnologyServiceTest extends BaseTest {
             verify(repository, times(1)).save(JAVA_TECHNOLOGY);
         }
 
-//    @Test
-//    public void deleteTechnology() {
+    @Test
+    public void deleteTechnology() {
 //        doNothing().when(repository).delete(JAVA_TECHNOLOGY);
-//        given(repository.delete(JAVA_TECHNOLOGY)).willReturn(JAVA_TECHNOLOGY);
-//        assertEquals(service.save(JAVA_TECHNOLOGY).getName(), JAVA_TECHNOLOGY.getName());
 //        verify(repository, times(1)).delete(JAVA_TECHNOLOGY);
-//    }
+    }
 
 
     @Test
     public void findById() throws Exception {
-//        when(repository.findById(anyLong())).thenReturn(JAVA_TECHNOLOGY);
-
-//        given(repository.findById(1L)).willReturn(JAVA_TECHNOLOGY);
-//        service.findById(JAVA_TECHNOLOGY.getId());
+        given(repository.findById(anyLong())).willReturn(Optional.of(JAVA_TECHNOLOGY));
+        assertNotNull(service.findById(JAVA_TECHNOLOGY.getId()));
     }
 
         @Test(expected = NotFoundException.class)
